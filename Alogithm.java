@@ -3,7 +3,8 @@ public class Alogithm {
         int[] arr = {3, 4, 3, 6, 1, 9, 23, 41, 6, 8};
         // bubbleSort(arr);
         // insertSort(arr);
-        selectionSort(arr);
+        // selectionSort(arr);
+        mergeSort(arr);
         for (int temp : arr) {
             System.out.println(temp);
         }
@@ -66,13 +67,59 @@ public class Alogithm {
 
 
     //归并排序
+    //思想：将数组从中间分成前后两部分，然后再分成前后两部分，再将排好序的两部分合并在一起
+    //核心思想是分治自相，分支是解决方案，递归是一种编程技巧
     public static void mergeSort(int[] arr) {
-
+        sort(arr, 0, arr.length - 1);
     }
 
+    private static void sort(int[] arr, int begin, int end) {
+        if (begin >= end) {
+            return;
+        }
+
+        int mid = (begin + end) / 2;
+        sort(arr, begin, mid);
+        sort(arr, mid + 1, end);
+
+        //合并数组
+        int[] temp = new int[arr.length];
+        merge(arr, begin, mid, end, temp);
+    }
+    private static void merge(int[] arr, int begin, int mid, int end, int[] temp) { 
+        int minB = begin;
+        int minMid = mid + 1;
+        int location = 0;
+
+        while(minB <= mid && minMid <= end) {
+            if (arr[minB] < arr[minMid]) {
+                temp[location++] = arr[minB++];
+            } else {
+                temp[location++] = arr[minMid++];
+            }
+        }
+
+        while (minB <= mid) {
+            temp[location++] = arr[minB++];
+        }
+
+        while (minMid <= end) {
+            temp[location++] = arr[minMid++];
+        }
+
+        location = 0;
+        while(begin <= end) {
+            arr[begin++] = temp[location++];
+        }
+    } 
 
     //快速排序
     public static void quickSort(int[] arr) {
+
+    }
+
+    //堆排序
+    public static void heapSort(int[] arr) {
 
     }
 
