@@ -4,7 +4,8 @@ public class Alogithm {
         // bubbleSort(arr);
         // insertSort(arr);
         // selectionSort(arr);
-        mergeSort(arr);
+        // mergeSort(arr);
+        quickSort(arr);
         for (int temp : arr) {
             System.out.println(temp);
         }
@@ -114,8 +115,40 @@ public class Alogithm {
     } 
 
     //快速排序
+    //如果要排序数组中下边从p到r之间的一组数据，我们选择p到r之间的任意数据作为privot（分区点）
+    //然后遍历p到r的数据，将小于privot放到左边，p大于privot放到右边
+    //快排的核心思想是分治和分区
     public static void quickSort(int[] arr) {
+        quickSort1(arr, 0, arr.length-1);
+    }
 
+    private static void quickSort1(int[] arr, int begin, int end) {
+        if (begin >= end) {
+            return;
+        }
+
+        int privot = partition(arr, begin, end);
+
+        quickSort1(arr, begin, privot-1);
+        quickSort1(arr, privot + 1, end);
+    }
+
+    //思想:将数组分为[p...i][i+1...r]两部分，
+    //从p到ｒ遍历，如果arr[j]小于privotValue则i与j交换位置，最后ｉ与r交换位置
+    private static int partition(int[] arr, int p, int r) {
+        int privotValue = arr[r];
+
+        int i=p;
+        for (int j=p; j<r; j++) {
+            if (arr[j] < privotValue) {
+                swap(arr, i, j);
+                i = i+1;
+            }
+        }
+
+        swap(arr, i, r);
+        
+        return i;
     }
 
     //堆排序
