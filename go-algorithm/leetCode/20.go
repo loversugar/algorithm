@@ -1,22 +1,23 @@
 package leetCode
 
-func isValid(s string)  {
-	getIntByString(s[0:1])
-}
-
-func getIntByString(c string) int {
-	switch c {
-	case "(":
-		return -1
-	case ")":
-		return 1
-	case "[":
-		return -2
-	case "]":
-		return 2
-	case "{":
-		return 3
-	default:
-		return -3
+func IsValid(s string) bool  {
+	if len(s) <= 0 {
+		return true
 	}
+
+	stack := make([]int32, 0)
+
+	for _, value := range s {
+		if value == '(' || value == '[' || value == '{' {
+			stack = append(stack, value)
+		} else if (value == ')' && len(stack) > 0 && stack[len(stack)-1] == '(') ||
+			(value == ']' && len(stack) > 0 && stack[len(stack)-1] == '[') ||
+			(value == '}' && len(stack) > 0 && stack[len(stack)-1] == '{') {
+			stack = stack[0:len(stack) - 1]
+		} else {
+			return false
+		}
+	}
+
+	return len(stack) == 0
 }
